@@ -64,6 +64,12 @@
         <input type="date" id="meetupDate" class="form-control" />
       </div>
 
+<div class="col-12 col-md-6">
+  <label for="startDate" class="form-label">Start Reading On (optional)</label>
+  <input type="date" id="startDate" class="form-control" />
+</div>
+
+
       <div class="col-12 col-md-6">
         <label for="totalPages" class="form-label">Total Pages</label>
         <input type="number" id="totalPages" class="form-control" min="1" />
@@ -188,6 +194,9 @@
       const currentPage = parseInt(currentPageInput.value);
       const today = new Date(); // Today's date, local time
       const finishEarly = document.getElementById("finishEarly").checked;
+      const startDateStr = document.getElementById("startDate").value;
+      const startDate = startDateStr ? new Date(startDateStr + "T00:00:00") : new Date();
+      startDate.setHours(0, 0, 0, 0);
 
       scheduleTableBody.innerHTML = ""; // Clear previous schedule
 
@@ -209,9 +218,8 @@
       // --- Date Handling ---
       const [year, month, day] = meetupDateStr.split('-').map(Number);
       const meetupDate = new Date(year, month - 1, day); // Local midnight
-      today.setHours(0, 0, 0, 0); // Today midnight
-
-      if (meetupDate < today) {
+      if (meetupDate <= startDate) {
+        alert("Meetup date must be after the start date.");
         alert("Meetup date cannot be in the past.");
         displayBookTitle.classList.add("hidden");
         tableContainer.classList.add("hidden");
@@ -232,7 +240,7 @@
       if (finishEarly) {
         adjustedMeetupDate.setDate(adjustedMeetupDate.getDate() - 1);
       }
-      const timeDiff = adjustedMeetupDate.getTime() - today.getTime();
+      const timeDiff = adjustedMeetupDate.getTime() - startDate.getTime();
       const daysRemaining = Math.max(1, Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) + 1);
       const pagesPerDay = Math.ceil(pagesRemaining / daysRemaining);
 
@@ -240,7 +248,8 @@
       // --- Schedule Generation ---
       let cumulativePages = currentPage;
       let dayCount = 1;
-      let currentDate = new Date(today); // Start iterating from today
+      let currentDate = new Date(startDate); // Start iterating from start date
+      currentDate.setHours(0, 0, 0, 0);
 
       while (cumulativePages < totalPages && currentDate.getTime() <= adjustedMeetupDate.getTime()) {
         let pagesToReadToday = 0;
