@@ -57,4 +57,4 @@ A simple, standalone HTML web application designed to help book club members (or
 
 ## 📄 License
 
-This project is open source. Feel free to use, modify, and distribute it. Consider adding a specific license file (e.g., MIT License) if desired.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
