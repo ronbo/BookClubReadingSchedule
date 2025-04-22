@@ -3,7 +3,7 @@
 A simple, standalone HTML web application designed to help book club members (or individual readers) create a manageable daily reading schedule to finish a book by a specific date.
 
 ![App Screenshot](screenshot.png)
-*(Suggestion: Replace `placeholder.png` with an actual screenshot of the app)*
+<!--*(Suggestion: Replace `placeholder.png` with an actual screenshot of the app)*-->
 
 ## ✨ Features
 
